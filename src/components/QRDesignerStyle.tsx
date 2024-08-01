@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import QRCodeStyling, { FileExtension, Options } from 'qr-code-styling';
 import { setNestedValue } from '@/helper/setNestedValue';
-import { getDefaultQrOptions } from '@/helper/getDefaultQrOptions';
 import SelectOne from './SelectOne';
 import { Gradient } from './GradientColorPicker';
 import ColorCheckBox from './ColorCheckBox';
