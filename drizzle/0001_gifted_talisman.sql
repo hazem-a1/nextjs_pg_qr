@@ -1,0 +1,1 @@
+ALTER TABLE "dynamic_links" ALTER COLUMN "id" SET DATA TYPE text;
