@@ -6,14 +6,16 @@ import { LinkList } from './LinkList';
 import NeonButton from '@/components/NeonButtonLink';
 import { getCurrentUser } from '@/auth/auth';
 import PleaseLoginFirst from '@/components/pleaseLoginFirst';
-
+import { withPagination } from '@/db/operations/pagination';
 
 export default async function LinkListingPage() {
   
   const user = await getCurrentUser();
 
   if (!user) return <PleaseLoginFirst />
-  const links = await db.select().from(dynamicLinks).where(eq(dynamicLinks.createdBy,user.id))
+  
+  const links = db.select().from(dynamicLinks).where(eq(dynamicLinks.createdBy,user.id)).$dynamic()
+  const paging = await withPagination(links,1,10);
 
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 rounded-lg shadow-md">
@@ -23,7 +25,7 @@ export default async function LinkListingPage() {
           </h1>
         <NeonButton href="/links/new">Create Link</NeonButton>
       </div>
-      <LinkList initialLinks={JSON.parse(JSON.stringify(links))} />
+      <LinkList initialLinks={JSON.parse(JSON.stringify(paging))} />
     </div>
   );
 }
