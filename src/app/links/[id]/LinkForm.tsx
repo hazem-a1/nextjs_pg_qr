@@ -7,7 +7,7 @@ import { Options } from 'qr-code-styling';
 import { getDefaultQrOptions } from '@/helper/getDefaultQrOptions';
 
 interface LinkData {
-  _id?: string;
+  id?: string;
   shortCode: string;
   targetUrl: string;
   qrStyleOptions: Options
@@ -42,8 +42,8 @@ export default function LinkForm({ initialData }: { initialData: LinkData | null
     setError('');
 
     try {
-      const url = link._id ? `/api/links/${link._id}` : '/api/links';
-      const method = link._id ? 'PUT' : 'POST';
+      const url = link.id ? `/api/links/${link.id}` : '/api/links';
+      const method = link.id ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
         method,
@@ -69,7 +69,7 @@ export default function LinkForm({ initialData }: { initialData: LinkData | null
   return (
     <div className="mx-auto mt-8 p-6 bg-gray-800 rounded-lg shadow-md items-center justify-items-center place-items-center flex flex-col">
       <h1 className="text-2xl font-bold mb-6 ">
-        {link._id ? 'Edit Link' : 'Create New Link'}
+        {link.id ? 'Edit Link' : 'Create New Link'}
       </h1>
       
       <form onSubmit={handleSubmit} className="space-y-4 items-center">

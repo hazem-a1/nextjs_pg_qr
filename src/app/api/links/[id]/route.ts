@@ -73,6 +73,7 @@ export async function PUT(req: NextRequest,{ params }: { params: { id: string } 
         not(eq(dynamicLinks.id,id)),
         eq(dynamicLinks.shortCode, shortCode)
       )).limit(1);
+      
      
       if (existingLink) {
         return NextResponse.json({ error: 'Short code already in use' }, { status: 400 });
