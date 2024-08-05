@@ -1,12 +1,9 @@
 import { notFound } from 'next/navigation';
-
-
 import LinkForm from './LinkForm';
 import { getCurrentUser } from '@/auth/auth';
 import PleaseLoginFirst from '@/components/pleaseLoginFirst';
 import { db } from '@/db';
-import { dynamicLinks } from '@/db/schema/dynamicLink';
-import { and, eq } from 'drizzle-orm';
+import LinkRepository from '@/db/repositories/link.repository';
 
 export default async function LinkPage({ params }: { params: { id: string } }) {
   
@@ -19,12 +16,10 @@ export default async function LinkPage({ params }: { params: { id: string } }) {
 
   let link = null;
   if (params.id !== 'new') {
-    [link] = await db.select().from(dynamicLinks).where(
-      and(
-        eq(dynamicLinks.id, params.id),
-        eq(dynamicLinks.createdBy, user.id)
-      )
-    ).limit(1);
+
+    const LinkRepo = new LinkRepository(db);
+    link = await LinkRepo.findUserLink(params.id,user.id);
+
     if (!link) {
       notFound();
     }

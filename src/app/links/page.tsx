@@ -1,12 +1,9 @@
 import { db } from '@/db';
-import { dynamicLinks } from '@/db/schema/dynamicLink';
-import { eq } from 'drizzle-orm';
-
 import { LinkList } from './LinkList';
 import NeonButton from '@/components/NeonButtonLink';
 import { getCurrentUser } from '@/auth/auth';
 import PleaseLoginFirst from '@/components/pleaseLoginFirst';
-import { withPagination } from '@/db/operations/pagination';
+import LinkRepository from '@/db/repositories/link.repository';
 
 export default async function LinkListingPage() {
   
@@ -14,8 +11,9 @@ export default async function LinkListingPage() {
 
   if (!user) return <PleaseLoginFirst />
   
-  const links = db.select().from(dynamicLinks).where(eq(dynamicLinks.createdBy,user.id)).$dynamic()
-  const paging = await withPagination(links,1,10);
+  const linksRepo = new LinkRepository(db);
+  // this accept pagination for later usage
+  const userLinks = await linksRepo.findByUserId(user.id);
 
   return (
     <div className="max-w-4xl mx-auto mt-8 p-6 rounded-lg shadow-md">
@@ -25,7 +23,7 @@ export default async function LinkListingPage() {
           </h1>
         <NeonButton href="/links/new">Create Link</NeonButton>
       </div>
-      <LinkList initialLinks={JSON.parse(JSON.stringify(paging))} />
+      <LinkList initialLinks={JSON.parse(JSON.stringify(userLinks))} />
     </div>
   );
 }
