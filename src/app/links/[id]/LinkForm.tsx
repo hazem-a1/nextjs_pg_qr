@@ -57,8 +57,8 @@ export default function LinkForm({ initialData }: { initialData: LinkData | null
         const errorResponse = await response.json()
         throw new Error(errorResponse.error || 'Failed to save link');
       } 
-      router.refresh()
       router.push('/links');
+      router.refresh()
     } catch (err) {
       setError((err as Error).message);
     } finally {
