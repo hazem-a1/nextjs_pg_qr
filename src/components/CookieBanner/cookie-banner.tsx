@@ -11,7 +11,6 @@ export default function CookieBanner() {
 
     useEffect(() => {
         const storedCookieConsent = getLocalStorage("cookie_consent", null);
-        console.log("Cookie Consent retrieved from storage: ", storedCookieConsent);
         setCookieConsent(storedCookieConsent);
         setIsLoading(false);
     }, []);
