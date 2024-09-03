@@ -1,6 +1,6 @@
 # Next.js Project with Authentication and Database Integration
 
-This project is a Next.js application that integrates authentication using NextAuth.js, Drizzle ORM for database operations, and various other libraries for enhanced functionality.
+This project is a Next.js application that integrates authentication using NextAuth.js, Drizzle ORM for database operations, and various other libraries for enhanced functionality, creating short link with customizable qrcode design.
 
 ## Technologies Used
 
